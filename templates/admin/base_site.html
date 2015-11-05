@@ -1,0 +1,9 @@
+{% extends "admin/base.html" %}
+
+{% block title %}{{ title }} | {{ site_title|default:_('Survey Admin') }}{% endblock %}
+<!-- Modify this to display different title for django admin-->
+{% block branding %}
+<h1 id="site-name"><a href="{% url 'admin:index' %}">Survery Admin</a></h1>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}

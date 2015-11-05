@@ -19,8 +19,7 @@ class QuestionInline(forms.ModelChoiceField):
     model = Survey.questions.through
     
 class SurveyAdmin(admin.ModelAdmin):
-    fieldsets = [(None,
-                  {'fields': ['title']}),]
+    model = Survey
     inlines = [QuestionInline,]
 
     
