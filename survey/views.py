@@ -35,7 +35,7 @@ class SurveyDetailView(generic.DetailView):
 class SurveyCreateView(generic.CreateView):
     """ Create new survey. """
     model = Survey
-    #success_url = reverse_lazy()
+    success_url = reverse_lazy('survey:index')
     template_name = 'survey/survey_form.html'
     
     # Have to specify the 'fields' attribute
@@ -48,5 +48,5 @@ class QuestionCreateView(generic.CreateView):
     fields = '__all__'#['question_text']
     template_name = 'survey/question_form.html'
     # have to specify the 'success_url' else there will be error
-    success_url = ''
+    success_url = reverse_lazy('survey:question_list')
     
