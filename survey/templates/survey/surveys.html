@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+
+<h1>Survey List</h1>
+{% if latest_survey_list %}
+<!-- use '|length' to get the size of the list -->
+<p>Number of available surveys: {{ latest_survey_list|length }}</p>
+    <ul>
+    {% for survey in latest_survey_list %}
+        <li><a href="/survey/{{ survey.id }}/">{{ survey.title }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No surveys are available.</p>
+{% endif %}
