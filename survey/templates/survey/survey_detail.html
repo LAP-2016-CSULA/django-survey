@@ -1,9 +1,21 @@
 <!DOCTYPE html>
 <h1>{{ survey.title }}</h1>
 <ul>
+<!-- Because questions in survey is a many-to-many relation,
+have to use '.all' (in template) or '.all()' (in django python)
+to get the list. without calling '.all', there will be error
+'ManyRelatedManager is not iterable'.
+'questions' field in survey is kind of a list already, so no
+such thing as 'questions_list.all'
+-->
+
+{% if survey.questions.all %}
+<p>Number of questions: {{ survey.questions.all|length }}</p>
 {% for question in survey.questions.all %}
     <li>{{ question.question_text }}
         <ul>
+        <!-- Choice in quest is one-to-many relation. the choice field is not 
+        a list. so need to call 'choice_set' and then '.all' for the list. -->
         {% for choice in question.choice_set.all %}
             <li>{{ choice.choice_text }}</li>
         {% endfor %}
@@ -11,3 +23,4 @@
     </li>
 {% endfor %}
 </ul>
+{% endif %}
