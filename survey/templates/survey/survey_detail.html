@@ -1,4 +1,8 @@
 <!DOCTYPE html>
+<ul>
+    <li><a href="{% url 'survey:index' %}">Survey List</a></li>
+    <li><a href="{% url 'survey:question_list' %}">Question List</a></li>
+</ul>
 <h1>{{ survey.title }}</h1>
 <ul>
 <!-- Because questions in survey is a many-to-many relation,

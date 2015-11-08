@@ -1,7 +1,12 @@
 <!DOCTYPE html>
-<!-- Create survey -->
+<!-- Create question -->
+<ul>
+    <li><a href="{% url 'survey:index' %}">Survey List</a></li>
+    <li><a href="{% url 'survey:question_list' %}">Question List</a></li>
+</ul>
 <h1>Create new question</h1>
 <form action="" method="post">{% csrf_token %}
     {{ form.as_p }}
     <input type="submit" value="Create" />
 </form>
+<a href="{% url 'survey:question_create' %}">Back</a>
