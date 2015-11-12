@@ -1,13 +1,15 @@
 from django.db import models
 
+
 # Create your models here.
 class Question(models.Model):
     """ Question model. """
     question_text = models.CharField(max_length=200)
     pub_date = models.DateTimeField('date published')
-    
+
     def __str__(self):
         return self.question_text
+
 
 class Choice(models.Model):
     """ Choice model. """
@@ -18,12 +20,13 @@ class Choice(models.Model):
     
     def __str__(self):
         return self.choice_text
-    
+
+
 class Survey(models.Model):
     """ Survey model. """
     title = models.CharField(max_length=200, default='')
     # Since a survey contains many different questions, and a question
-    # can be belong to many different survery, ManyToManyField is
+    # can be belong to many different survey, ManyToManyField is
     # needed in this case 
     questions = models.ManyToManyField(Question, related_name='surveys')
     
@@ -35,3 +38,13 @@ class Survey(models.Model):
         python 3x -> '__str__'
         """
         return self.title
+
+
+class Species(models.Model):
+    """ Species model. For now, store plants info. """
+    scientific_name = models.CharField(max_length=200)
+    name = models.CharField(max_length=50)
+    survey = models.ForeignKey(Survey, null=True)
+    
+    def __str__(self):
+        return self.name
