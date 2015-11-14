@@ -22,6 +22,18 @@ class Choice(models.Model):
         return self.choice_text
 
 
+class SurveyQuestion(models.Model):
+    """ Question in survey. It is something like a tree.
+    Each choice can lead to another question.
+    """
+    question = models.ForeignKey(Question, related_name='question')
+    previous_question = models.ForeignKey(Question, related_name='next_question', null=True, blank=True)
+    key_choice = models.ForeignKey(Choice, null=True, blank=True, related_name='survey_question')
+
+    def __str__(self):
+        return Question.objects.get(pk=self.question.pk).question_text
+
+
 class Survey(models.Model):
     """ Survey model. """
     title = models.CharField(max_length=200, default='')
@@ -42,9 +54,9 @@ class Survey(models.Model):
 
 class Species(models.Model):
     """ Species model. For now, store plants info. """
-    scientific_name = models.CharField(max_length=200)
+    scientific_name = models.CharField(max_length=100)
     name = models.CharField(max_length=50)
-    survey = models.ForeignKey(Survey, null=True)
+    survey = models.ForeignKey(Survey, null=True, blank=True)
     
     def __str__(self):
         return self.name

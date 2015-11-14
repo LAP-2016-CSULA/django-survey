@@ -4,6 +4,7 @@ from .models import Question, Choice, Survey
 from django.core.urlresolvers import reverse_lazy
 from .forms import QuestionForm, ChoiceFormSet
 from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404
 
 
 class QuestionIndexView(generic.ListView):
@@ -13,7 +14,7 @@ class QuestionIndexView(generic.ListView):
     
     def get_queryset(self):
         """ Return the last five published questions. """
-        return Question.objects.order_by('-pub_date')[:5]
+        return Question.objects.order_by('-pub_date')[:10]
 
 
 class SurveyIndexView(generic.ListView):
@@ -78,6 +79,57 @@ class QuestionCreateView(generic.CreateView):
         :param kwargs:
         :return:
         """
+        self.object = None
+        form_class = self.get_form_class()
+        form = self.get_form(form_class)
+        choice_form = ChoiceFormSet(request.POST)
+        if form.is_valid() and choice_form.is_valid():
+            return self.form_valid(form, choice_form)
+        else:
+            return self.form_invalid(form, choice_form)
+
+    def form_valid(self, form, choice_form):
+        """ If all form are valid, save it
+        :param form:
+        :param choice_form:
+        :return:
+        """
+        self.object = form.save()
+        choice_form.instance = self.object
+        choice_form.save()
+        return HttpResponseRedirect(self.get_success_url())
+
+    def form_invalid(self, form, choice_form):
+        """ If a form is invalid
+        :param form:
+        :param choice_form:
+        :return:
+        """
+        return self.render_to_response(self.get_context_data(form=form, choice_form=choice_form))
+
+
+class QuestionUpdateView(generic.UpdateView):
+    """ Update question
+    """
+    model = Question
+    template_name = 'survey/question_form.html'
+    form_class = QuestionForm
+    success_url = 'survey:question_list'
+
+    def get(self, request, *args, **kwargs):
+        """ GET request
+        :param request:
+        :param args:
+        :param kwargs:
+        :return:
+        """
+        self.object = get_object_or_404(Question, pk=self.kwargs['pk'])
+        form_class = self.get_form_class()
+        form = self.get_form(form_class)
+        choice_form = ChoiceFormSet()
+        return self.render_to_response(self.get_context_data(object=self.object, form=form, choice_form=choice_form))
+
+    def post(self, request, *args, **kwargs):
         self.object = None
         form_class = self.get_form_class()
         form = self.get_form(form_class)

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Multiformset Demo</title>
+        <title>Question Update</title>
         {% load staticfiles %}
         <script src="{% static "js/jquery-1.11.3.min.js" %}"></script>
         <script src="{% static "js/jquery.formset.js" %}"></script>
@@ -20,7 +20,7 @@
             <li><a href="{% url 'survey:index' %}">Survey List</a></li>
             <li><a href="{% url 'survey:question_list' %}">Question List</a></li>
         </ul>
-        <h1>Create new question</h1>
+        <h1>Question id: {{ question.id }}</h1>
         <form action="" method="post">{% csrf_token %}
             {{ form.as_p }}
             <fieldset>
@@ -37,6 +37,6 @@
             </fieldset>
             <input type="submit" value="Create" />
         </form>
-        <a href="{% url 'survey:question_list' %}">Back</a>
+        <a href="{% url 'survey:question_create' %}">Back</a>
     </body>
 </html>
