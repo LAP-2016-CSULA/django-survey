@@ -1,6 +1,6 @@
 # http://kevindias.com/writing/django-class-based-views-multiple-inline-formsets/
 from django.views import generic
-from .models import Question, Choice, Survey
+from .models import Question, Survey, Species
 from django.core.urlresolvers import reverse_lazy
 from .forms import QuestionForm, ChoiceFormSet
 from django.http import HttpResponseRedirect
@@ -14,7 +14,7 @@ class QuestionIndexView(generic.ListView):
     
     def get_queryset(self):
         """ Return the last five published questions. """
-        return Question.objects.order_by('-pub_date')[:10]
+        return Question.objects.order_by('-pub_date')
 
 
 class SurveyIndexView(generic.ListView):
@@ -157,3 +157,29 @@ class QuestionUpdateView(generic.UpdateView):
         :return:
         """
         return self.render_to_response(self.get_context_data(form=form, choice_form=choice_form))
+
+
+class SpeciesIndexView(generic.ListView):
+    """ Species list. """
+    model = Species
+    context_object_name = 'species_list'
+    template_name = 'survey/species.html'
+
+    def get_queryset(self):
+        return Species.objects.order_by('-name')
+
+
+class SpeciesCreateView(generic.CreateView):
+    """ Add species to list. """
+    model = Species
+    template_name = 'survey/species_form.html'
+    success_url = reverse_lazy('survey:species_index')
+    fields = '__all__'
+
+
+class SpeciesDetailView(generic.DetailView):
+    """ Detail of species. """
+    model = Species
+    template_name = 'survey/species_detail.html'
+
+

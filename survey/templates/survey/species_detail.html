@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Species Detail</title>
+</head>
+<body>
+    <!-- http://stackoverflow.com/questions/6217638/access-foreignkey-set-directly-in-template-in-django -->
+    <ul>
+        <li><a href="{% url 'survey:index' %}">Survey List</a></li>
+        <li><a href="{% url 'survey:question_list' %}">Question List</a></li>
+        <li><a href="{% url 'survey:species_index' %}">Species List</a> </li>
+    </ul>
+    <h1>{{ species.name }}</h1>
+    <p>Scientific Name: {{ species.scientific_name }}</p>
+    <p>Regular Name: {{ species.name }}</p>
+    <p>Survey: <a href="{% url 'survey:detail' species.survey.id %}">{{ species.survey }}</a></p>
+    <a href="{% url 'survey:species_index' %}">Back</a>
+</body>
+</html>

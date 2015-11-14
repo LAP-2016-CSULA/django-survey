@@ -1,3 +1,5 @@
+#  http://stackoverflow.com/questions/949268/django-accessing-the-model-instance-from-within-modeladmin
+
 from django.contrib import admin
 from .models import Question, Choice, Survey, Species, SurveyQuestion
 from django import forms
