@@ -22,10 +22,30 @@ class Choice(models.Model):
         return self.choice_text
 
 
+class Species(models.Model):
+    """ Species model. For now, store plants info. """
+    scientific_name = models.CharField(max_length=100)
+    name = models.CharField(max_length=50)
+    # survey = models.ForeignKey(Survey, null=True, blank=True)
+
+    def __str__(self):
+        return self.name
+
+
+class Survey2(models.Model):
+    """ Survey with tree structure. """
+    title = models.CharField(max_length=100, default='')
+    species = models.ForeignKey(Species, null=True, blank=True)
+
+    def __str__(self):
+        return self.title
+
+
 class SurveyQuestion(models.Model):
     """ Question in survey. It is something like a tree.
     Each choice can lead to another question.
     """
+    survey = models.ForeignKey(Survey2, null=True, blank=True)
     question = models.ForeignKey(Question, related_name='question')
     previous_question = models.ForeignKey(Question, related_name='next_question', null=True, blank=True)
     key_choice = models.ForeignKey(Choice, null=True, blank=True, related_name='survey_question')
@@ -41,7 +61,7 @@ class Survey(models.Model):
     # can be belong to many different survey, ManyToManyField is
     # needed in this case 
     questions = models.ManyToManyField(Question, related_name='surveys')
-    
+
     def __str__(self):
         """
         In order for django admin to display the title instead of 
@@ -52,11 +72,4 @@ class Survey(models.Model):
         return self.title
 
 
-class Species(models.Model):
-    """ Species model. For now, store plants info. """
-    scientific_name = models.CharField(max_length=100)
-    name = models.CharField(max_length=50)
-    survey = models.ForeignKey(Survey, null=True, blank=True)
-    
-    def __str__(self):
-        return self.name
+

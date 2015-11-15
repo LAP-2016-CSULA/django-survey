@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Survey Index</title>
+</head>
+<body>
+    <h1>Survey List</h1>
+    {% if survey_list %}
+        <p>Number of available surveys: {{ survey_list|length }}</p>
+        <ul>
+        {% for survey in survey_list %}
+            <li><a href="{% url 'survey:survey_tree_index' survey.id %}">{{ survey.title }}</a></li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+
+</body>
+</html>
