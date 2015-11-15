@@ -14,8 +14,11 @@
     <h1>{{ species.name }}</h1>
     <p>Scientific Name: {{ species.scientific_name }}</p>
     <p>Regular Name: {{ species.name }}</p>
-    <!--<p>Survey: <a href="{% url 'survey:detail' species.survey.id %}">{{ species.survey }}</a></p>
-    -->
+    {% with survey as species.survey_set.all|first %}
+    {% if survey %}
+    <p>Survey: <a href="{% url 'survey:detail' survey.id %}">{{ species.survey }}</a></p>
+    {% endif %}
+    {% endwith %}
     <a href="{% url 'survey:species_index' %}">Back</a>
 </body>
 </html>
