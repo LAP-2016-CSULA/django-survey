@@ -14,14 +14,14 @@ class QuestionIndexView(generic.ListView):
     
     def get_queryset(self):
         """ Return the last five published questions. """
-        return Question.objects.order_by('-pub_date')
+        return Question.objects.order_by('-question_text')
 
 
 class SurveyIndexView(generic.ListView):
     """ Survey list. """
     template_name = 'survey/surveys.html'
     context_object_name = 'latest_survey_list'
-    
+
     def get_queryset(self):
         """ Return the last five published surveys. """
         return Survey.objects.order_by('-title')
@@ -44,7 +44,7 @@ class SurveyCreateView(generic.CreateView):
     model = Survey
     success_url = reverse_lazy('survey:index')
     template_name = 'survey/survey_form.html'
-    
+
     # Have to specify the 'fields' attribute
     # else it will raise error Using ModelFormMixin without fields is prohibited
     fields = '__all__'
