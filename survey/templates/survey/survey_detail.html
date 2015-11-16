@@ -14,14 +14,14 @@ to get the list. without calling '.all', there will be error
 such thing as 'questions_list.all'
 -->
 
-{% if survey.questions.all %}
-<p>Number of questions: {{ survey.questions.all|length }}</p>
-{% for question in survey.questions.all %}
-    <li>{{ question.question_text }}
+{% if survey.surveyquestion_set.all %}
+<p>Number of questions: {{ survey.surveyquestion_set.all|length }}</p>
+{% for question in survey.surveyquestion_set.all %}
+    <li>{{ question.question }}
         <ul>
         <!-- Choice in quest is one-to-many relation. the choice field is not 
         a list. so need to call 'choice_set' and then '.all' for the list. -->
-        {% for choice in question.choice_set.all %}
+        {% for choice in question.question.choice_set.all %}
             <li>{{ choice.choice_text }}</li>
         {% endfor %}
         </ul>
