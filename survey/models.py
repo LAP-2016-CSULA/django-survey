@@ -72,4 +72,16 @@ class SurveyQuestion(models.Model):
 #         return self.title
 
 
+class SurveyEntry(models.Model):
+    name = models.CharField(max_length=20)
+    completed_time = models.DateTimeField(auto_now_add=True, blank=True)
+
+    def __str__(self):
+        return self.name
+
+
+class SurveyEntryQuestion(models.Model):
+    question = models.ForeignKey(Question)
+    choice = models.ForeignKey(Choice)
+
 

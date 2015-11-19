@@ -183,3 +183,13 @@ class SpeciesDetailView(generic.DetailView):
     template_name = 'survey/species_detail.html'
 
 
+# def survey_start(request, survey_id):
+#     """ Start the survey. Usually start with the first question
+#     :param request:
+#     :param survey_id:
+#     :return:
+#     """
+#     survey = get_object_or_404(Survey, pk=survey_id)
+
+
+

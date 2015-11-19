@@ -2,7 +2,7 @@
 
 from django.forms import ModelForm
 from django.forms.models import inlineformset_factory
-from .models import Question, Choice
+from .models import Question, Choice, SurveyEntry
 
 
 class QuestionForm(ModelForm):
@@ -12,3 +12,10 @@ class QuestionForm(ModelForm):
         fields = '__all__'
 
 ChoiceFormSet = inlineformset_factory(Question, Choice, fields=['choice_text',])
+
+
+class SurveyForm(ModelForm):
+    class Meta:
+        model = SurveyEntry
+        fields = ['name',]
+
