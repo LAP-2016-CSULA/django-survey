@@ -19,6 +19,11 @@ class Choice(models.Model):
     def __str__(self):
         return self.choice_text
     
+class Plant(models.Model):
+    """
+        
+    """
+    
 class Survey(models.Model):
     """ Survey model. """
     title = models.CharField(max_length=200, default='')
